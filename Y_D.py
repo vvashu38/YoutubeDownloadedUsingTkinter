@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox as mb
 import tkinter.messagebox
+from pathlib import Path
 
 def video():
     try:
@@ -21,22 +22,25 @@ def downloaded():
 
 def downloader():
     global e
-    global path
     top = Tk()
     top.title("Youtube Downloader")
     top.geometry("500x400")
-    L1 = Label(top, text="URL OF VIDEO")
-    L1.pack( side = TOP)
-    e = Entry(top)
-    e.pack()
+    L1 = Label(top, text="URL OF VIDEO", fg = "red", font = "Times 20 bold")
+    L1.pack( side = TOP , pady = (100,10))
+    e = Entry(top,  width = 70)
+    e.pack(pady = 10)
     e.focus_set()
     b = Button(top, text='DOWNLOAD VIDEO', command=video)
     b.pack()
-    path = filedialog.askdirectory(title="Choose directory",
-                                   initialdir="/home",
-                                   mustexist=True)
     top.mainloop()
 
+downloads_path = str(Path.home() / "Downloads")
 
+path = filedialog.askdirectory(title="Choose directory in which you want to save your video",
+                                   initialdir= downloads_path,
+                                   mustexist=True)
+if path == "":
+    path = downloads_path
 
+print("path: " , path)
 downloader()
